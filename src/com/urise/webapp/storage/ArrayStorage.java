@@ -14,8 +14,7 @@ public class ArrayStorage {
 
     public void clear() {
         //Arrays.setAll(this.storage, i -> null);
-        int finalIndex = this.size > 0 ? this.size - 1 : 0;
-        Arrays.fill(this.storage, 0, finalIndex, null);
+        Arrays.fill(this.storage, 0, this.size, null);
         this.size = 0;
     }
 

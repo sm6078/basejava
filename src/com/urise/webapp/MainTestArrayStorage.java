@@ -17,9 +17,6 @@ public class MainTestArrayStorage {
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
 
-        Resume r3_2 = new Resume();
-        r3_2.setUuid("uuid3");
-
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
@@ -31,8 +28,6 @@ public class MainTestArrayStorage {
 
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
-        printAll();
-        ARRAY_STORAGE.update(r3_2);
         printAll();
         ARRAY_STORAGE.clear();
         printAll();

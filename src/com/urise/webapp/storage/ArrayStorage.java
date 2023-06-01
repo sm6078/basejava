@@ -19,37 +19,43 @@ public class ArrayStorage {
         this.size = 0;
     }
 
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index == -1) {
+            System.out.println("Resume " + resume.getUuid() + " not exist");
+        } else {
+            this.storage[index] = resume;
+        }
+    }
+
     public void save(Resume r) {
         if (this.size >= this.storage.length) {
-            System.out.println("Сохранение невозможно, превышен объем storage, в кол-ве: " + this.storage.length + " шт");
-        } else if (searchByUuid(r.getUuid()) < 0) {
-            int index = this.size > 0 ? this.size : 0;
-            storage[index] = r;
+            System.out.println("Storage overflow  max count Resume: " + this.storage.length);
+        } else if (getIndex(r.getUuid()) >= 0) {
+            System.out.println("Resume " + r.getUuid() + " already exist");
+        } else {
+            storage[this.size] = r;
             this.size++;
         }
     }
 
     public Resume get(String uuid) {
-        int index = searchByUuid(uuid);
-        if (index >= 0) {
-            return storage[index];
+        int index = getIndex(uuid);
+        if (index < 0) {
+            System.out.println("Resume " + uuid + " not exist");
+            return null;
         }
-        return null;
+        return this.storage[index];
     }
 
     public void delete(String uuid) {
-        int index = searchByUuid(uuid);
-        if (index >= 0) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            System.out.println("Resume " + uuid + " not exist");
+        } else {
             storage[index] = storage[this.size - 1];
             storage[this.size - 1] = null;
             this.size--;
-        }
-    }
-
-    public void update(Resume resume) {
-        int index = searchByUuid(resume.getUuid());
-        if (index >= 0) {
-            this.storage[index] = resume;
         }
     }
 
@@ -65,15 +71,12 @@ public class ArrayStorage {
         return this.size;
     }
 
-    private int searchByUuid(String uuid) {
+    private int getIndex(String uuid) {
         for (int i = 0; i < this.size; i++) {
             if (this.storage[i].getUuid().equals(uuid)) {
-                System.out.println("Резюме с uuid: " + uuid + " найдено");
                 return i;
             }
         }
-        System.out.println("Резюме с uuid: " + uuid + " не найдено");
         return -1;
-
     }
 }

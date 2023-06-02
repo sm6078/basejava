@@ -7,8 +7,10 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+public class ArrayStorage implements Storage{
+    private static final int STORAGE_LIMIT = 10000;
+
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
 
@@ -28,7 +30,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (this.size >= this.storage.length) {
+        if (this.size >= STORAGE_LIMIT) {
             System.out.println("Storage overflow  max count Resume: " + this.storage.length);
         } else if (getIndex(r.getUuid()) >= 0) {
             System.out.println("Resume " + r.getUuid() + " already exist");
